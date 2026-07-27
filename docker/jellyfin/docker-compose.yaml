@@ -1,0 +1,21 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - 8096:8096/tcp
+      - 7359:7359/udp
+    volumes:
+      - ./cache:/cache
+      - ./config:/config
+      - type: bind
+        source: ~/Videos
+        target: /media
+        read_only: true
+      # - type: bind
+      #   source: ./font
+      #   target: /usr/local/share/fonts/custom
+      #   read_only: true
+    restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
